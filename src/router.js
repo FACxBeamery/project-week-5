@@ -1,6 +1,6 @@
 const express = require("express");
-// const addItems = require("./handlers/addItems.js");
-// const getItems = require("./handlers/getItems.js");
+const addQuestion = require("./handlers/addQuestion.js");
+const getQuestions = require("./handlers/getQuestions.js");
 // const editItem = require("./handlers/editItem.js");
 // const deleteItem = require("./handlers/deleteItem.js");
 
@@ -10,7 +10,7 @@ router.use(express.static("public"));
 
 router.get("/questions", getQuestions);
 
-// router.post("/items", addItems);
+router.post("/questions", addQuestion);
 
 // router.delete("/items/:id(\\d+)", deleteItem);
 
