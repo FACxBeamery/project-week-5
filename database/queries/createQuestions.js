@@ -1,5 +1,5 @@
-const createQuestion = (newTodo, questions) => {
-    questions.insertOne(newTodo, (err, result) => {
+const createQuestion = (newQuestion, questions) => {
+    questions.insertOne(newQuestion, (err, result) => {
         if (err) throw err;
         return result;
     });
