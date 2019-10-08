@@ -1,21 +1,60 @@
 const mongo = require("mongodb").MongoClient;
 
-const dbConnection = (cb) => {
-    mongo.connect(
-        "mongodb://localhost:27017/trainingforum",
-        {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        },
+let _db;
 
-        function(err, client) {
-            if (err) throw err;
+const initDb = () => {
+    return new Promise((resolve, reject) => {
+        const connected = (err, client) => {
+            if (err) {
+                reject(err);
+            }
+            console.log("DB initialized");
+            //pay attention
+            _db = client.db("trainingforum");
+            resolve(_db);
+        };
 
-            const db = client.db("trainingforum");
-            const questions = db.collection("questions");
-            cb(questions);
+        if (_db) {
+            console.warn("Trying to init DB again!");
+            resolve(_db);
         }
-    );
+
+        mongo.connect(
+            "mongodb://localhost:27017/trainingforum",
+            {
+                useNewUrlParser: true,
+                useUnifiedTopology: true
+            },
+
+            connected
+        );
+    });
 };
 
-module.exports = dbConnection;
+const getDb = () => {
+    if (!_db) {
+        throw new Error("Db has not been initialized, please call init first!");
+    } else {
+        return _db;
+    }
+};
+
+// const dbConnection = (cb) => {
+//     mongo.connect(
+//         "mongodb://localhost:27017/items",
+//         {
+//             useNewUrlParser: true,
+//             useUnifiedTopology: true
+//         },
+
+//         function(err, client) {
+//             if (err) throw err;
+
+//             const db = client.db("items");
+//             const todos = db.collection("todos");
+//             cb(todos);
+//         }
+//     );
+// };
+
+module.exports = { getDb, initDb };
