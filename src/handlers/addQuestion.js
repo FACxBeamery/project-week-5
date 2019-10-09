@@ -1,6 +1,7 @@
 const logic = require("../logic.js");
 const dbConnection = require("../../database/dbConnection");
 const createQuestion = require("../../database/queries/createQuestions");
+const readQuestions = require("../../database/queries/readQuestions");
 const getDB = require("../../database/dbConnection.js").getDb;
 const Joi = require("joi");
 
@@ -50,13 +51,13 @@ const addQuestion = (req, res) => {
         .validate(newQuestion, { abortEarly: false }) //abortEarly - collect all errors not just the first one
         .then((validatedQuestion) => {
             const db = getDB();
-            createQuestion(newQuestion, db.collection("questions"));
-            res.status(200).send(
-                db
-                    .collection("questions")
-                    .find({})
-                    .toArray()
-            );
+            createQuestion(newQuestion, db.collection("questions"), (err, result) => {
+                if (err) throw err;
+                readQuestions(db.collection("questions"), (err) => {
+                    if (err) throw err;
+                    res.status(200).json(result);
+                });
+            });
         })
         .catch((validationError) => {
             const errorMessage = validationError.details.map((d) => d.message);
