@@ -1,8 +1,5 @@
-const createQuestion = (newQuestion, questions) => {
-    questions.insertOne(newQuestion, (err, result) => {
-        if (err) throw err;
-        return result;
-    });
+const createQuestion = (newQuestion, questions, cb) => {
+    questions.insertOne(newQuestion, cb);
 };
 
 module.exports = createQuestion;
