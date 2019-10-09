@@ -17,7 +17,12 @@ const submitQuestion = (e) => {
         },
         body: JSON.stringify(body)
     })
-        .then(displayQuestions)
+        .then((res) => res.json())
+        .then((data) => (allQuestions = data))
+        .then((allQuestions) => {
+            console.log(allQuestions);
+            displayQuestions(allQuestions);
+        })
         .catch(console.error);
 };
 
@@ -28,13 +33,11 @@ const getQuestionsFromServer = () => {
             "Content-Type": "application/json"
         }
     })
-        .then((res) => {
-            console.log(res.json());
-            return res.json();
-        })
-        .then((data) => {
-            console.log(data);
-            displayQuestions(data);
+        .then((res) => res.json())
+        .then((data) => (allQuestions = data))
+        .then((allQuestions) => {
+            console.log(allQuestions);
+            displayQuestions(allQuestions);
         })
         .catch(console.error);
 };
