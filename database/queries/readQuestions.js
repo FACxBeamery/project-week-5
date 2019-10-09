@@ -1,9 +1,5 @@
-const readQuestions = (questions) => {
-    questions.find({}).toArray((err, result) => {
-        if (err) throw err;
-        console.log(result);
-        return result;
-    });
+const readQuestions = (questions, cb) => {
+    questions.find({}).toArray(cb);
 };
 
 module.exports = readQuestions;
