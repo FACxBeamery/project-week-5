@@ -2,6 +2,7 @@ const logic = require("../logic.js");
 const dbConnection = require("../../database/dbConnection");
 const createQuestion = require("../../database/queries/createQuestions");
 const getDB = require("../../database/dbConnection.js").getDb;
+const Joi = require("joi");
 
 const addQuestion = (req, res) => {
     /**
@@ -17,6 +18,25 @@ const addQuestion = (req, res) => {
 
     // asnwers should look like: [{answer: stringanswer, source: stringsource, answerOwner: stringowner}]
 
+    const newQuestionSchema = Joi.object().keys({
+        question: Joi.string()
+            .min(1)
+            .max(140)
+            .required(),
+        questionOwner: Joi.string()
+            .min(1)
+            .max(20)
+            .required(),
+        week: Joi.number()
+            .integer()
+            .min(0)
+            .max(12)
+            .required(),
+        answers: Joi.required(),
+        dateAdded: Joi.string(),
+        dateEdited: Joi.string()
+    });
+
     const newQuestion = {
         question: req.fields.questionTitle,
         answers: req.fields.answers,
@@ -26,9 +46,17 @@ const addQuestion = (req, res) => {
         dateEdited: new Date(Date.now()).toUTCString()
     };
 
-    const db = getDB();
-    createQuestion(newQuestion, db.collection("questions"));
-    res.status(200).send("<h1>Item successfully added</h1>");
+    newQuestionSchema
+        .validate(newQuestion, { abortEarly: false }) //abortEarly - collect all errors not just the first one
+        .then((validatedQuestion) => {
+            const db = getDB();
+            createQuestion(newQuestion, db.collection("questions"));
+            res.status(200).send(`question ${JSON.stringify(validatedQuestion)} created`);
+        })
+        .catch((validationError) => {
+            const errorMessage = validationError.details.map((d) => d.message);
+            res.status(400).send(errorMessage);
+        });
 };
 
 module.exports = addQuestion;
