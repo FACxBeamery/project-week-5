@@ -16,7 +16,7 @@ const addQuestion = (req, res) => {
      * dateEdited -> date.edited
      */
 
-    // asnwers should look like: [{answer: stringanswer, source: stringsource, answerOwner: stringowner}]
+    // asnwers should look like: [{answer: stringanswer, answerOwner: stringowner}]
 
     const newQuestionSchema = Joi.object().keys({
         question: Joi.string()
@@ -51,7 +51,12 @@ const addQuestion = (req, res) => {
         .then((validatedQuestion) => {
             const db = getDB();
             createQuestion(newQuestion, db.collection("questions"));
-            res.status(200).send(`question ${JSON.stringify(validatedQuestion)} created`);
+            res.status(200).send(
+                db
+                    .collection("questions")
+                    .find({})
+                    .toArray()
+            );
         })
         .catch((validationError) => {
             const errorMessage = validationError.details.map((d) => d.message);

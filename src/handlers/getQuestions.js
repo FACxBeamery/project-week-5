@@ -6,9 +6,11 @@ const getQuestions = (req, res) => {
     const db = getDB();
 
     if (["week"].includes(req.query.sortBy)) {
-        res.send(sortQuestions(db.collection("questions"), req.query.sortBy, -1));
+        res.json(sortQuestions(db.collection("questions"), req.query.sortBy, -1));
     } else {
-        res.send(readQuestions(db.collection("questions")));
+        // res.json(readQuestions(db.collection("questions")));
+
+        res.json({ myCollection: readQuestions(db.collection("questions")) });
     }
 };
 
