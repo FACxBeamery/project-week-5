@@ -9,10 +9,11 @@ const displayQuestions = (questionsArray) => {
 const renderQuestion = (question) => {
     const questionWrapper = document.createElement("div");
     questionWrapper.classList.add("question-wrapper__question-wrapper");
+    questionWrapper.id = question._id;
 
     const questionTitle = document.createElement("p");
     questionTitle.classList.add("question-wrapper__question-title");
-    questionTitle.textContent = question.questionTitle;
+    questionTitle.textContent = question.question;
 
     const questionDetailContainer = document.createElement("div");
     questionDetailContainer.classList.add("question-wrapper__question-detail-container");
