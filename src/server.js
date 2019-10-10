@@ -12,9 +12,9 @@ app.use(formidable());
 app.use(router);
 
 initDb()
-    .then(() => {
-        app.listen(port, () => {
-            console.log(`Server listening on port ${port}. Ready to accept requests!`);
-        });
-    })
-    .catch(console.error);
+	.then(() => {
+		app.listen(port, () => {
+			console.log(`Server listening on port ${port}. Ready to accept requests!`);
+		});
+	})
+	.catch(console.error);
