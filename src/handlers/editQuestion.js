@@ -12,6 +12,9 @@ const editQuestion = (req, res) => {
 
     const newAnswer = req.fields.answer;
     const idToUpdate = req.fields._id;
+    console.log(newAnswer);
+    console.log(idToUpdate);
+    console.log(typeof newAnswer);
     const db = getDB();
     updateQuestion(newAnswer, idToUpdate, db.collection("questions"))
         .then((result) => readQuestions(db.collection("questions")))
