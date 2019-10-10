@@ -25,12 +25,18 @@
                     <label for="answer" class="form__label"
                         >Do you know the answer? Enter it here:</label
                     >
-                    <textarea type="text" name="answer" class="form__input" rows="6"></textarea>
+                    <textarea
+                        class="form__textarea form__input"
+                        type="text"
+                        name="answer"
+                        class="form__input"
+                        rows="6"
+                    ></textarea>
 
                     <label for="week-dropdown" class="form__label"
                         >Select the week for this question:</label
                     >
-                    <select class="form-week__dropdown" name="week-dropdown" required>
+                    <select class="form__dropdown" name="week-dropdown" required>
                         <option value="" disabled selected>Select Week</option>
                         <option value="0">Generic</option>
                         <option value="1">1</option>
@@ -48,7 +54,8 @@
                     </select>
 
                     <label for="name-dropdown" class="form__label">Who are you?</label>
-                    <select class="form-name__dropdown" name="name-dropdown" required>
+
+                    <select class="form__dropdown" name="name-dropdown" required>
                         <option value="" disabled selected>Select Name</option>
                         <option value="Joao">João</option>
                         <option value="Martha">Martha</option>

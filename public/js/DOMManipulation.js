@@ -21,6 +21,7 @@ const changeAnswerForm = (submitButton) => {
     const newAnswerForm = document.createElement("form");
     newAnswerForm.classList.add("form");
     const newAnswerText = document.createElement("textarea");
+    newAnswerText.classList.add("form__textarea");
     newAnswerText.classList.add("form__input");
     newAnswerText.id = `text${_id}`;
     const newAnswerTextLabel = document.createElement("label");
