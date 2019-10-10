@@ -1,6 +1,7 @@
 const mongo = require("mongodb").MongoClient;
 
 let _db;
+let _client;
 
 const initDb = () => {
     return new Promise((resolve, reject) => {
@@ -10,6 +11,7 @@ const initDb = () => {
             }
             console.log("DB initialized");
             //pay attention
+            _client = client;
             _db = client.db("trainingforum");
             resolve(_db);
         };
@@ -39,22 +41,10 @@ const getDb = () => {
     }
 };
 
-// const dbConnection = (cb) => {
-//     mongo.connect(
-//         "mongodb://localhost:27017/items",
-//         {
-//             useNewUrlParser: true,
-//             useUnifiedTopology: true
-//         },
+const closeDb = () => {
+    _db = null;
 
-//         function(err, client) {
-//             if (err) throw err;
+    return _client.close();
+};
 
-//             const db = client.db("items");
-//             const todos = db.collection("todos");
-//             cb(todos);
-//         }
-//     );
-// };
-
-module.exports = { getDb, initDb };
+module.exports = { initDb, getDb, closeDb };

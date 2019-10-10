@@ -17,7 +17,7 @@ const addQuestion = (req, res) => {
      * dateEdited -> date.edited
      */
 
-    // asnwers should look like: [{answer: stringanswer, answerOwner: stringowner}]
+    // asnwers should look like: [{answerTitle: stringanswer, answerOwner: stringowner}]
 
     const newQuestionSchema = Joi.object().keys({
         question: Joi.string()
