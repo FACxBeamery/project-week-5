@@ -10,7 +10,6 @@ const initDb = () => {
                 reject(err);
             }
             console.log("DB initialized");
-            //pay attention
             _client = client;
             _db = client.db("trainingforum");
             resolve(_db);
