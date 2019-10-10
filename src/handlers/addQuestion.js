@@ -51,13 +51,11 @@ const addQuestion = (req, res) => {
         .validate(newQuestion, { abortEarly: false }) //abortEarly - collect all errors not just the first one
         .then((validatedQuestion) => {
             const db = getDB();
-            createQuestion(newQuestion, db.collection("questions"), (err, result) => {
-                if (err) throw err;
-                readQuestions(db.collection("questions"), (err) => {
-                    if (err) throw err;
-                    res.status(200).json(result);
-                });
-            });
+
+            createQuestion(newQuestion, db.collection("questions"))
+                .then((result) => readQuestions(db.collection("questions")))
+                .then((result) => res.status(200).json(result))
+                .catch((err) => res.status(404).json(err.message));
         })
         .catch((validationError) => {
             const errorMessage = validationError.details.map((d) => d.message);
