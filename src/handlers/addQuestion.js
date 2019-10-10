@@ -1,5 +1,3 @@
-const logic = require("../logic.js");
-const dbConnection = require("../../database/dbConnection");
 const createQuestion = require("../../database/queries/createQuestions");
 const readQuestions = require("../../database/queries/readQuestions");
 const getDB = require("../../database/dbConnection.js").getDb;

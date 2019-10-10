@@ -1,8 +1,7 @@
 const express = require("express");
 const addQuestion = require("./handlers/addQuestion.js");
 const getQuestions = require("./handlers/getQuestions.js");
-// const editItem = require("./handlers/editItem.js");
-// const deleteItem = require("./handlers/deleteItem.js");
+const editQuestion = require("./handlers/editQuestion.js");
 
 const router = express();
 
@@ -12,8 +11,6 @@ router.get("/questions", getQuestions);
 
 router.post("/questions", addQuestion);
 
-// router.delete("/items/:id(\\d+)", deleteItem);
-
-// router.patch("/items/:id(\\d+)", editItem);
+router.patch("/questions", editQuestion);
 
 module.exports = router;
