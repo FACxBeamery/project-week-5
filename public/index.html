@@ -19,48 +19,65 @@
         <main>
             <section>
                 <form id="question-form" class="form">
-					<label for="question" class="form__label">Enter your question here:</label>
-					<input type="text" name="question" class="form__input" required />
+                    <label for="question" class="form__label">Enter your question here:</label>
+                    <input type="text" name="question" class="form__input" required />
 
-					<label for="answer" class="form__label">Do you know the answer? Enter it here:</label>
-					<textarea type="text" name="answer" class="form__input" rows="6"></textarea>
+                    <label for="answer" class="form__label"
+                        >Do you know the answer? Enter it here:</label
+                    >
+                    <textarea type="text" name="answer" class="form__input" rows="6"></textarea>
 
-					<label for="week-dropdown" class="form__label">Select the week for this question:</label>
-					<select class="form-week__dropdown" name="week-dropdown" required>
-						<option value="" disabled selected>Select Week</option>
-						<option value="0">Generic</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="12">12</option>
-					</select>
+                    <label for="week-dropdown" class="form__label"
+                        >Select the week for this question:</label
+                    >
+                    <select class="form-week__dropdown" name="week-dropdown" required>
+                        <option value="" disabled selected>Select Week</option>
+                        <option value="0">Generic</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
 
-					<label for="name-dropdown" class="form__label">Who are you?</label>
-					<select class="form-name__dropdown" name="name-dropdown" required>
-						<option value="" disabled selected>Select Name</option>
-						<option value="Joao">João</option>
-						<option value="Martha">Martha</option>
-						<option value="Lyndsey">Lyndsey</option>
-						<option value="Thomas">Thomas</option>
-						<option value="Tom">Tom</option>
-						<option value="Toni">Toni</option>
-						<option value="Michael">Michael</option>
-						<option value="Oliver">Oliver</option>
-						<option value="Kristina">Kristina</option>
-					</select>
+                    <label for="name-dropdown" class="form__label">Who are you?</label>
+                    <select class="form-name__dropdown" name="name-dropdown" required>
+                        <option value="" disabled selected>Select Name</option>
+                        <option value="Joao">João</option>
+                        <option value="Martha">Martha</option>
+                        <option value="Lyndsey">Lyndsey</option>
+                        <option value="Thomas">Thomas</option>
+                        <option value="Tom">Tom</option>
+                        <option value="Toni">Toni</option>
+                        <option value="Michael">Michael</option>
+                        <option value="Oliver">Oliver</option>
+                        <option value="Kristina">Kristina</option>
+                    </select>
 
-					<label class="form__label visually-hidden" for="submit-button">Click here to submit:</label>
-					<button type="submit" class="form__button" name="submit-button" id="submit-question">Submit</button>
-				</form>
+                    <label class="form__label visually-hidden" for="submit-button"
+                        >Click here to submit:</label
+                    >
+                    <button
+                        type="submit"
+                        class="form__button"
+                        name="submit-button"
+                        id="submit-question"
+                    >
+                        Submit
+                    </button>
+                </form>
             </section>
+            <select name="sortby" id="sortby" class="sortby">
+                <option value="">Choose sort method</option>
+                <option value="week">By week</option>
+            </select>
             <section id="questions-container"></section>
         </main>
         <footer></footer>
