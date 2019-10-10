@@ -30,10 +30,20 @@ const questions = [
         question: "question 3",
         answers: [],
         questionOwner: "owner for question 3",
-        week: "2",
+        week: "12",
         dateAdded: "Wed, 9 Oct 2019 07:00:00 GMT",
         dateEdited: "Wed, 9 Oct 2019 07:00:00 GMT"
     }
 ];
 
-module.exports = { questions };
+const newQuestion = {
+    _id: "4",
+    question: "question 4",
+    answers: [],
+    questionOwner: "owner for question 4",
+    week: "10",
+    dateAdded: "Thu, 10 Oct 2019 07:00:00 GMT",
+    dateEdited: "Thu, 10 Oct 2019 07:00:00 GMT"
+};
+
+module.exports = { questions, newQuestion };
