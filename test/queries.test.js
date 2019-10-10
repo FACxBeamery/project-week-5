@@ -3,6 +3,7 @@ const { initDb, getDb, closeDb } = require("../database/dbConnection");
 const { deleteAllQuestions, buildTestQuestions } = require("../database/dbTestBuild");
 const readQuestions = require("../database/queries/readQuestions");
 const createQuestion = require("../database/queries/createQuestions");
+const sortQuestionsBy = require("../database/queries/sortQuestions");
 const { newQuestion } = require("../database/dummyData");
 
 test("database setup", (t) => {
@@ -163,6 +164,24 @@ test("Testing if week prop in questions obj is a string that represents a number
                     );
                 })
                 .catch((err) => console.log(err));
+        })
+        .then(closeDb);
+});
+
+test("Testing if collections are sorted by week in descending order", (t) => {
+    // state how many assertions will be made
+    t.plan(1);
+    // open new db connection for these tests
+    initDb()
+        .then((db) => {
+            sortQuestionsBy(db.collection("questions"), "week", -1)
+                .then((questions) => {
+                    t.ok(
+                        questions[0].week > questions[1].week,
+                        `first question's week is 'higher' than the second question's week `
+                    );
+                })
+                .catch(console.log);
         })
         .then(closeDb);
 });
