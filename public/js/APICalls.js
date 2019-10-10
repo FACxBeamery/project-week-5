@@ -1,4 +1,5 @@
 const submitQuestion = (e) => {
+    e.preventDefault();
     const inputs = document.getElementById("question-form").elements;
 
     const questionTitleValue = inputs["question"].value;
@@ -6,6 +7,11 @@ const submitQuestion = (e) => {
     const questionOwnerValue = inputs["name-dropdown"].value;
     const answerTitleValue = inputs["answer"].value;
     const answerOwnerValue = inputs["name-dropdown"].value;
+    inputs["question"].value = "";
+    inputs["week-dropdown"].value = "";
+    inputs["name-dropdown"].value = "";
+    inputs["answer"].value = "";
+    inputs["name-dropdown"].value = "";
 
     if (questionTitleValue.length > 140 || typeof questionTitleValue !== "string") {
         alert(
@@ -19,11 +25,11 @@ const submitQuestion = (e) => {
         alert(
             "This name is not valid - please ensure it is between 2 and 20 characters in length, and is submitted as a string."
         );
-    } else if (!Number.isInteger(Number(week)) || week < 0 || week > 12) {
+    } else if (!Number.isInteger(Number(weekValue)) || weekValue < 0 || weekValue > 12) {
         alert("Please ensure that the week chosen is a whole number between 0 and 12 (inclusive)");
     } else if (answerTitleValue.length > 10000) {
         alert("This answer is too long! Please keep your answer to under 10000 characters.");
-    } else if (!(questionTitleValue && week && questionOwnerValue)) {
+    } else if (!(questionTitleValue && weekValue && questionOwnerValue)) {
         // hard-coding required inputs so request doesn't send
         console.error("Please fill in the title!");
     } else {
@@ -35,7 +41,6 @@ const submitQuestion = (e) => {
             week: weekValue,
             questionOwner: questionOwnerValue
         };
-
         fetch("/questions", {
             method: "POST",
             headers: {
@@ -46,8 +51,7 @@ const submitQuestion = (e) => {
             .then((res) => res.json())
             .then((data) => (allQuestions = data))
             .then((allQuestions) => {
-                console.log(allQuestions);
-                displayQuestions(allQuestions);
+                displayQuestions(allQuestions.reverse());
             })
             .catch((err) => {
                 console.error(err);
@@ -68,7 +72,6 @@ const getQuestionsFromServer = (method) => {
         .then((res) => res.json())
         .then((data) => (allQuestions = data))
         .then((allQuestions) => {
-            console.log(allQuestions);
             if (!method) {
                 displayQuestions(allQuestions.reverse());
             }
@@ -105,8 +108,7 @@ const addNewAnswer = (_id, newAnswerObj) => {
             .then((res) => res.json())
             .then((data) => (allQuestions = data))
             .then((allQuestions) => {
-                console.log(allQuestions);
-                displayQuestions(allQuestions);
+                displayQuestions(allQuestions.reverse());
             })
             .catch((err) => {
                 console.error(err);

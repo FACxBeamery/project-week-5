@@ -7,7 +7,9 @@ document.getElementById("questions-container").addEventListener("click", (e) => 
         changeAnswerForm(e.target);
     } else if (e.target.classList.contains("answers-container__submit-new-answer")) {
         const _id = e.target.parentNode.parentNode.parentNode.id;
-        const newAnswerText = e.target.previousSibling.previousSibling.value;
+        const newAnswerText = e.target.previousSibling.previousSibling.previousSibling.value;
+        // console.log(e.target.previousSibling.previousSibling.previousSibling);
+
         const newAnswerOwner = e.target.previousSibling.value;
         const newAnswerObject = { answerTitle: newAnswerText, answerOwner: newAnswerOwner };
         addNewAnswer(_id, newAnswerObject);
