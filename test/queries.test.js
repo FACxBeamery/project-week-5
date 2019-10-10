@@ -4,6 +4,7 @@ const { deleteAllQuestions, buildTestQuestions } = require("../database/dbTestBu
 const readQuestions = require("../database/queries/readQuestions");
 const createQuestion = require("../database/queries/createQuestions");
 const sortQuestionsBy = require("../database/queries/sortQuestions");
+const updateQuestion = require("../database/queries/updateQuestion");
 const { newQuestion } = require("../database/dummyData");
 
 test("database setup", (t) => {
@@ -180,8 +181,32 @@ test("Testing if collections are sorted by week in descending order", (t) => {
                         questions[0].week > questions[1].week,
                         `first question's week is 'higher' than the second question's week `
                     );
+                    // readQuestions(db.collection("questions")).then((result) => console.log(result));
                 })
+
                 .catch(console.log);
         })
+        .then(closeDb);
+});
+
+test("Testing if answer was added to item", (t) => {
+    // state how many assertions will be made
+    t.plan(1);
+    // open new db connection for these tests
+    initDb()
+        .then((db) => {
+            const newAnswer = {
+                answerTitle: "I know everything AASAAAbout this! so...",
+                answerOwner: "Martha"
+            };
+
+            updateQuestion(newAnswer, "507f1f77bcf86cd799439011", db.collection("questions")).then(
+                (result) => {
+                    // console.log(result);
+                    t.equal(result.result.nModified, 1, "question object was modified");
+                }
+            );
+        })
+
         .then(closeDb);
 });
