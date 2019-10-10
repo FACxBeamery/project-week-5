@@ -1,5 +1,59 @@
 document.getElementById("submit-question").addEventListener("click", submitQuestion);
 
+document.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (e.target.classList.contains("answers-container__submit-button")) {
+        // const _id = e.target.parentNode.parentNode.id;
+        changeAnswerForm(e.target);
+    }
+});
+
+document.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (e.target.classList.contains("answers-container__submit-new-answer")) {
+        const _id = e.target.parentNode.parentNode.parentNode.id;
+        const newAnswerText = e.target.previousSibling.previousSibling.value;
+        const newAnswerOwner = e.target.previousSibling.value;
+        const newAnswerObject = { answerTitle: newAnswerText, answerOwner: newAnswerOwner };
+        addNewAnswer(_id, newAnswerObject);
+    }
+});
+
+const changeAnswerForm = (submitButton) => {
+    const answersContainer = submitButton.parentNode;
+    answersContainer.removeChild(submitButton);
+    const newAnswerForm = document.createElement("form");
+    const newAnswerText = document.createElement("textarea");
+    const newAnswerOwner = document.createElement("select");
+    let newOption;
+    const namesArray = [
+        "João",
+        "Martha",
+        "Lyndsey",
+        "Tom",
+        "Thomas",
+        "Toni",
+        "Michael",
+        "Kristina",
+        "Oliver"
+    ];
+    for (let i = 0; i < namesArray.length; i++) {
+        newOption = document.createElement("option");
+        newOption.textContent = namesArray[i];
+        newOption.value = namesArray[i];
+        newAnswerOwner.appendChild(newOption);
+    }
+
+    const newAnswerSubmit = document.createElement("button");
+    newAnswerSubmit.type = "submit";
+    newAnswerSubmit.textContent = "Add this answer";
+    newAnswerSubmit.classList.add("answers-container__submit-new-answer");
+    newAnswerForm.appendChild(newAnswerText);
+    newAnswerForm.appendChild(newAnswerOwner);
+    newAnswerForm.appendChild(newAnswerSubmit);
+    answersContainer.appendChild(newAnswerForm);
+};
+
 const displayQuestions = (questionsArray) => {
     resetQuestionContainer();
     const questionsContainer = document.getElementById("questions-container");
@@ -31,6 +85,13 @@ const renderQuestion = (question) => {
     const answersContainer = document.createElement("div");
     answersContainer.classList.add("question-wrapper__answers-container");
     question.answers.forEach((answer) => answersContainer.appendChild(renderAnswer(answer)));
+    const newAnswerButton = document.createElement("button");
+    newAnswerButton.type = "submit";
+    newAnswerButton.classList.add("answers-container__submit-button");
+    //ADD LABEL FOR ACCESSIBILITY
+    //const answerLabel = document.createElement("label");
+    newAnswerButton.textContent = "Add an answer";
+    answersContainer.appendChild(newAnswerButton);
 
     questionWrapper.appendChild(questionTitle);
     questionWrapper.appendChild(questionDetailContainer);
