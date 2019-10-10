@@ -12,6 +12,9 @@ input {
     flex-direction: column;
     align-items: center;
     margin: 2rem 0rem;
+    background: yellow;
+    margin-top: 0;
+    padding: 2rem;
 }
 
 .header__title {
@@ -23,6 +26,9 @@ input {
     display: flex;
     flex-direction: column;
     margin: 0rem 1rem 2rem 1rem;
+    align-items: center;
+    width: 80vw;
+    margin: auto;
 }
 
 .form__label {
@@ -31,15 +37,26 @@ input {
 
 .form__dropdown {
     margin-bottom: 1rem;
+    align-self: center;
 }
 
 .form__input {
     margin-bottom: 1rem;
+    width: 80vw;
+}
+
+.form__textarea {
+    max-height: 30vh;
+    margin-top: 0px;
+    min-height: 10vh;
+    overflow-y: scroll;
 }
 
 .form__button {
     margin: auto;
-    border: 0.125rem solid #ffe500;
+    border: 0.125rem solid #1be7ff;
+    background-color: #1be7ff;
+    margin-bottom: 1.5rem;
 }
 
 .form-week__details-wrapper {
@@ -52,7 +69,7 @@ input {
     display: flex;
     flex-direction: column;
     margin: 0rem 1rem 2rem 1rem;
-    border: 0.125rem solid #3dc1c1;
+    border: 0.25rem solid #6eeb83;
     padding: 1rem;
 }
 
@@ -60,7 +77,7 @@ input {
     font-weight: 500;
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    border-bottom: 0.125rem solid #444;
+    border-bottom: 0.125rem solid #000000;
     padding-bottom: 0.5rem;
 }
 
@@ -72,7 +89,7 @@ input {
 }
 
 .answer-wrapper {
-    border: 0.125rem solid #f3b9e4;
+    border: 0.125rem solid #000000;
     padding: 0.5rem;
     margin-bottom: 1rem;
     max-height: 20vh;
@@ -87,7 +104,7 @@ input {
 
 .question-wrapper__week {
     text-align: right;
-    background: antiquewhite;
+    background: #ffe500;
     margin-left: auto;
     padding: 0.5rem;
 }

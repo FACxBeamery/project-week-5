@@ -1,20 +1,18 @@
 document.getElementById("submit-question").addEventListener("click", submitQuestion);
 
-document.getElementById("questions-container").addEventListener("click", e => {
-	e.preventDefault();
-	if (e.target.classList.contains("answers-container__submit-button")) {
-		// const _id = e.target.parentNode.parentNode.id;
-		changeAnswerForm(e.target);
-	} else if (e.target.classList.contains("answers-container__submit-new-answer")) {
-		const _id = e.target.parentNode.parentNode.parentNode.id;
-		const newAnswerText = e.target.previousSibling.previousSibling.value;
-		const newAnswerOwner = e.target.previousSibling.value;
-		const newAnswerObject = { answerTitle: newAnswerText, answerOwner: newAnswerOwner };
-		addNewAnswer(_id, newAnswerObject);
-	}
+document.getElementById("questions-container").addEventListener("click", (e) => {
+    e.preventDefault();
+    if (e.target.classList.contains("answers-container__submit-button")) {
+        // const _id = e.target.parentNode.parentNode.id;
+        changeAnswerForm(e.target);
+    } else if (e.target.classList.contains("answers-container__submit-new-answer")) {
+        const _id = e.target.parentNode.parentNode.parentNode.id;
+        const newAnswerText = e.target.previousSibling.previousSibling.value;
+        const newAnswerOwner = e.target.previousSibling.value;
+        const newAnswerObject = { answerTitle: newAnswerText, answerOwner: newAnswerOwner };
+        addNewAnswer(_id, newAnswerObject);
+    }
 });
-
-
 
 const changeAnswerForm = (submitButton) => {
     const answersContainer = submitButton.parentNode;
@@ -23,6 +21,7 @@ const changeAnswerForm = (submitButton) => {
     const newAnswerForm = document.createElement("form");
     newAnswerForm.classList.add("form");
     const newAnswerText = document.createElement("textarea");
+    newAnswerText.classList.add("form__textarea");
     newAnswerText.classList.add("form__input");
     newAnswerText.id = `text${_id}`;
     const newAnswerTextLabel = document.createElement("label");
@@ -67,13 +66,12 @@ const changeAnswerForm = (submitButton) => {
     newAnswerForm.appendChild(newAnswerOwner);
     newAnswerForm.appendChild(newAnswerSubmit);
     answersContainer.appendChild(newAnswerForm);
-
 };
 
-const displayQuestions = questionsArray => {
-	resetQuestionContainer();
-	const questionsContainer = document.getElementById("questions-container");
-	questionsArray.forEach(question => questionsContainer.appendChild(renderQuestion(question)));
+const displayQuestions = (questionsArray) => {
+    resetQuestionContainer();
+    const questionsContainer = document.getElementById("questions-container");
+    questionsArray.forEach((question) => questionsContainer.appendChild(renderQuestion(question)));
 };
 
 const renderQuestion = (question) => {
@@ -116,12 +114,11 @@ const renderQuestion = (question) => {
     questionWrapper.appendChild(answersContainer);
 
     return questionWrapper;
-
 };
 
-const renderAnswer = answer => {
-	const answerWrapper = document.createElement("div");
-	answerWrapper.classList.add("answer-wrapper");
+const renderAnswer = (answer) => {
+    const answerWrapper = document.createElement("div");
+    answerWrapper.classList.add("answer-wrapper");
 
     const answerText = document.createElement("p");
     answerText.classList.add("answer-wrapper__answer-text");
@@ -131,15 +128,14 @@ const renderAnswer = answer => {
     answerOwner.classList.add("answer-wrapper__answer-owner");
     answerOwner.textContent = `Answered by: ${answer.answerOwner}`;
 
-
-	answerWrapper.appendChild(answerText);
-	answerWrapper.appendChild(answerOwner);
-	return answerWrapper;
+    answerWrapper.appendChild(answerText);
+    answerWrapper.appendChild(answerOwner);
+    return answerWrapper;
 };
 
 const resetQuestionContainer = () => {
-	const questionsContainer = document.getElementById("questions-container");
-	while (questionsContainer.firstChild) {
-		questionsContainer.removeChild(questionsContainer.firstChild);
-	}
+    const questionsContainer = document.getElementById("questions-container");
+    while (questionsContainer.firstChild) {
+        questionsContainer.removeChild(questionsContainer.firstChild);
+    }
 };
