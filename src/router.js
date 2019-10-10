@@ -7,7 +7,9 @@ const router = express();
 
 router.use(express.static("public"));
 
-router.get("/questions", getQuestions);
+router.get("/questions/", getQuestions);
+
+router.get("/questions/:sortby", getQuestions);
 
 router.post("/questions", addQuestion);
 
