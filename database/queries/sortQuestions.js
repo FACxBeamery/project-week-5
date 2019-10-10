@@ -3,14 +3,15 @@ const sortQuestionsBy = (questions, sortKey, sortValue) => {
         [sortKey]: sortValue
     };
 
-    questions
-        .find()
-        .sort(sortObject)
-        .toArray((err, result) => {
-            if (err) throw err;
-            console.log(result);
-            return result;
-        });
+    return new Promise((resolve, reject) => {
+        questions
+            .find()
+            .sort(sortObject)
+            .toArray((err, result) => {
+                if (err) reject(err);
+                resolve(result);
+            });
+    });
 };
 
 module.exports = sortQuestionsBy;
