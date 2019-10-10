@@ -1,6 +1,8 @@
+const ObjectId = require("mongodb").ObjectId;
+
 const questions = [
     {
-        _id: "1",
+        _id: ObjectId(1),
         question: "question 1",
         answers: [
             { answerTitle: "answer title 1 for q1", answerOwner: "answer owner 1 for q1" },
@@ -13,7 +15,7 @@ const questions = [
         dateEdited: "Wed, 14 Jun 2017 07:00:00 GMT"
     },
     {
-        _id: "2",
+        _id: ObjectId("507f1f77bcf86cd799439011"),
         question: "question 2",
         answers: [
             { answerTitle: "answer title 1 for q2", answerOwner: "answer owner 1 for q2" },
@@ -26,7 +28,7 @@ const questions = [
         dateEdited: "Wed, 9 Oct 2019 07:00:00 GMT"
     },
     {
-        _id: "3",
+        _id: ObjectId(3),
         question: "question 3",
         answers: [],
         questionOwner: "owner for question 3",
@@ -37,7 +39,7 @@ const questions = [
 ];
 
 const newQuestion = {
-    _id: "4",
+    _id: ObjectId(4),
     question: "question 4",
     answers: [],
     questionOwner: "owner for question 4",
