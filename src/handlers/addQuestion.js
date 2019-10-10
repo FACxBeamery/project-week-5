@@ -36,6 +36,16 @@ const addQuestion = (req, res) => {
 		dateEdited: Joi.string(),
 	});
 
+	const newAnswerSchema = Joi.object().keys({
+		answerTitle: Joi.string()
+			.min(1)
+			.max(10000),
+		answerOwner: Joi.string()
+			.min(2)
+			.max(20)
+			.required(),
+	});
+
 	const newQuestion = {
 		question: req.fields.questionTitle,
 		answers: req.fields.answers,

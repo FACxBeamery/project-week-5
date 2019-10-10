@@ -1,32 +1,37 @@
 const submitQuestion = e => {
 	const inputs = document.getElementById("question-form").elements;
 
-	const questionTitle = inputs["question"].value;
-	const week = inputs["week-dropdown"].value;
-	const questionOwner = inputs["name-dropdown"].value;
+	const questionTitleValue = inputs["question"].value;
+	const weekValue = inputs["week-dropdown"].value;
+	const questionOwnerValue = inputs["name-dropdown"].value;
+	const answerTitleValue = inputs["answer"].value;
+	const answerOwnerValue = inputs["name-dropdown"].value;
 
-	if (questionTitle.length > 140 || typeof questionTitle !== "string") {
+	if (questionTitleValue.length > 140 || typeof questionTitleValue !== "string") {
 		alert(
 			"Question title is not valid - please ensure it is between 1 and 140 characters in length, and is submitted as a string."
 		);
-	} else if (questionOwner.length < 2 || questionOwner.length > 20 || typeof questionTitle !== "string") {
+	} else if (
+		questionOwnerValue.length < 2 ||
+		questionOwnerValue.length > 20 ||
+		typeof questionTitleValue !== "string"
+	) {
 		alert(
 			"This name is not valid - please ensure it is between 2 and 20 characters in length, and is submitted as a string."
 		);
-		return;
 	} else if (!Number.isInteger(Number(week)) || week < 0 || week > 12) {
 		alert("Please ensure that the week chosen is a whole number between 0 and 12 (inclusive)");
-	} else if (!(questionTitle && week && questionOwner)) {
+	} else if (answerTitleValue.length > 10000) {
+		alert("This answer is too long! Please keep your answer to under 10000 characters.");
+	} else if (!(questionTitleValue && week && questionOwnerValue)) {
 		// hard-coding required inputs so request doesn't send
 		console.error("Please fill in the title!");
 	} else {
 		const body = {
-			questionTitle: inputs["question"].value,
-			answers: inputs["answer"].value
-				? [{ answerTitle: inputs["answer"].value, answerOwner: inputs["name-dropdown"].value }]
-				: [],
-			week: inputs["week-dropdown"].value,
-			questionOwner: inputs["name-dropdown"].value,
+			questionTitle: questionTitleValue,
+			answers: answerTitleValue ? [{ answerTitle: answerTitleValue, answerOwner: answerOwnerValue }] : [],
+			week: weekValue,
+			questionOwner: questionOwnerValue,
 		};
 
 		fetch("/questions", {
@@ -44,7 +49,9 @@ const submitQuestion = e => {
 			})
 			.catch(err => {
 				console.error(err);
-				alert("Sorry, it looks like there's been a problem! Please try submitting your answer again.");
+				alert(
+					`Sorry, it looks like there's been a problem! Please try submitting your answer again. The error code is ${err.status}`
+				);
 			});
 	}
 };
@@ -62,22 +69,41 @@ const getQuestionsFromServer = () => {
 			console.log(allQuestions);
 			displayQuestions(allQuestions);
 		})
-		.catch(console.error);
+		.catch(err => {
+			console.error(err);
+			alert(
+				`Hmm, we can't access the server at the moment. Please try again later. The error code is ${err.status}`
+			);
+		});
 };
 
 const addNewAnswer = (_id, newAnswerObj) => {
-	fetch("/questions", {
-		method: "PATCH",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({ _id, answer: newAnswerObj }),
-	})
-		.then(res => res.json())
-		.then(data => (allQuestions = data))
-		.then(allQuestions => {
-			console.log(allQuestions);
-			displayQuestions(allQuestions);
+	console.log("this ran");
+	const answerTitleValue = newAnswerObj.answerTitle;
+	const answerOwnerValue = newAnswerObj.answerOwner;
+	console.log(answerTitleValue);
+	if (!(answerTitleValue && answerTitleValue.length < 10000 && answerOwnerValue && answerOwnerValue.length < 20)) {
+		console.error("answer is invalid, please ensure that it is less than 10000 characters");
+		alert(
+			"Your answer is too long! Please try to be more concise in your response, and keep it under 10000 characters!"
+		);
+	} else {
+		fetch("/questions", {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ _id, answer: newAnswerObj }),
 		})
-		.catch(console.error);
+			.then(res => res.json())
+			.then(data => (allQuestions = data))
+			.then(allQuestions => {
+				console.log(allQuestions);
+				displayQuestions(allQuestions);
+			})
+			.catch(err => {
+				console.error(err);
+				alert(`This answer hasn't been sent successfully - please try again. The error code is ${err.status}`);
+			});
+	}
 };
