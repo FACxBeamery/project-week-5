@@ -81,10 +81,8 @@ const getQuestionsFromServer = (method) => {
 };
 
 const addNewAnswer = (_id, newAnswerObj) => {
-    console.log("this ran");
     const answerTitleValue = newAnswerObj.answerTitle;
     const answerOwnerValue = newAnswerObj.answerOwner;
-    console.log(answerTitleValue);
     if (
         !(
             answerTitleValue &&
@@ -109,6 +107,8 @@ const addNewAnswer = (_id, newAnswerObj) => {
             .then((data) => (allQuestions = data))
             .then((allQuestions) => {
                 displayQuestions(allQuestions.reverse());
+
+                document.getElementById(_id).focus();
             })
             .catch((err) => {
                 console.error(err);
