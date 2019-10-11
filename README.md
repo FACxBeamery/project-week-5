@@ -12,3 +12,5 @@ Each time a question is asked, the user must specify the question, the week that
 Once a question is submitted, it is added to the forum's question board, and other users can read the questions and add their own answers. ![](https://i.imgur.com/8d4z50P.png)
 ![](https://i.imgur.com/Uej8TPz.png)
 
+We hope to deploy the training forum online in the near future. 
+
