@@ -1,5 +1,4 @@
 document.getElementById("submit-question").addEventListener("click", submitQuestion);
-
 document.getElementById("questions-container").addEventListener("click", (e) => {
     e.preventDefault();
     if (e.target.classList.contains("answers-container__submit-button")) {
@@ -35,23 +34,19 @@ const addNewAnswerForm = (submitButton) => {
     newAnswerOwner.classList.add("form__dropdown");
     newAnswerOwner.id = `owner${_id}`;
     let newOption;
-    const namesArray = [
-        "João",
-        "Martha",
-        "Lyndsey",
-        "Tom",
-        "Thomas",
-        "Toni",
-        "Michael",
-        "Kristina",
-        "Oliver"
-    ];
-    for (let i = 0; i < namesArray.length; i++) {
-        newOption = document.createElement("option");
-        newOption.textContent = namesArray[i];
-        newOption.value = namesArray[i];
-        newAnswerOwner.appendChild(newOption);
-    }
+   	const namesArray = ["", "João", "Martha", "Lyndsey", "Tom", "Thomas", "Toni", "Michael", "Kristina", "Oliver"];
+	for (let i = 0; i < namesArray.length; i++) {
+		newOption = document.createElement("option");
+		if (i === 0) {
+			newOption.textContent = "Select Name";
+			newOption.disabled = true;
+			newOption.selected = true;
+		} else {
+			newOption.textContent = namesArray[i];
+		}
+		newOption.value = namesArray[i];
+		newAnswerOwner.appendChild(newOption);
+	}
     const newAnswerOwnerLabel = document.createElement("label");
     newAnswerOwnerLabel.textContent = "Who are you?";
     newAnswerOwnerLabel.setAttribute("for", `owner${_id}`);
@@ -121,31 +116,33 @@ const renderQuestion = (question, index) => {
     questionWrapper.appendChild(answersContainer);
 
     return questionWrapper;
+
 };
 
-const renderAnswer = (answer) => {
-    const answerWrapper = document.createElement("div");
-    answerWrapper.classList.add("answer-wrapper");
+const renderAnswer = answer => {
+	const answerWrapper = document.createElement("div");
+	answerWrapper.classList.add("answer-wrapper");
 
-    const answerText = document.createElement("p");
-    answerText.classList.add("answer-wrapper__answer-text");
-    answerText.textContent = answer.answerTitle;
+	const answerText = document.createElement("p");
+	answerText.classList.add("answer-wrapper__answer-text");
+	answerText.textContent = answer.answerTitle;
 
-    const answerOwner = document.createElement("p");
-    answerOwner.classList.add("answer-wrapper__answer-owner");
-    answerOwner.textContent = `Answered by: ${answer.answerOwner}`;
+	const answerOwner = document.createElement("p");
+	answerOwner.classList.add("answer-wrapper__answer-owner");
+	answerOwner.textContent = `Answered by: ${answer.answerOwner}`;
 
-    answerWrapper.appendChild(answerText);
-    answerWrapper.appendChild(answerOwner);
-    return answerWrapper;
+	answerWrapper.appendChild(answerText);
+	answerWrapper.appendChild(answerOwner);
+	return answerWrapper;
 };
 
 const resetQuestionContainer = () => {
-    const questionsContainer = document.getElementById("questions-container");
-    while (questionsContainer.firstChild) {
-        questionsContainer.removeChild(questionsContainer.firstChild);
-    }
+	const questionsContainer = document.getElementById("questions-container");
+	while (questionsContainer.firstChild) {
+		questionsContainer.removeChild(questionsContainer.firstChild);
+	}
 };
+
 const sortBy = (e) => {
     if (e.target.value === "week") {
         getQuestionsFromServer(e.target.value);
