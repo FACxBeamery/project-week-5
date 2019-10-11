@@ -4,7 +4,7 @@ document.getElementById("questions-container").addEventListener("click", (e) => 
     e.preventDefault();
     if (e.target.classList.contains("answers-container__submit-button")) {
         // const _id = e.target.parentNode.parentNode.id;
-        changeAnswerForm(e.target);
+        addNewAnswerForm(e.target);
     } else if (e.target.classList.contains("answers-container__submit-new-answer")) {
         const _id = e.target.parentNode.parentNode.parentNode.id;
         const newAnswerText = e.target.previousSibling.previousSibling.previousSibling.value;
@@ -16,7 +16,7 @@ document.getElementById("questions-container").addEventListener("click", (e) => 
     }
 });
 
-const changeAnswerForm = (submitButton) => {
+const addNewAnswerForm = (submitButton) => {
     const answersContainer = submitButton.parentNode;
     const _id = answersContainer.parentNode.id;
     answersContainer.removeChild(submitButton);
@@ -68,18 +68,23 @@ const changeAnswerForm = (submitButton) => {
     newAnswerForm.appendChild(newAnswerOwner);
     newAnswerForm.appendChild(newAnswerSubmit);
     answersContainer.appendChild(newAnswerForm);
+    newAnswerTextLabel.focus();
 };
 
 const displayQuestions = (questionsArray) => {
     resetQuestionContainer();
     const questionsContainer = document.getElementById("questions-container");
-    questionsArray.forEach((question) => questionsContainer.appendChild(renderQuestion(question)));
+    questionsArray.reduce((previous, current, index, array) => {
+        questionsContainer.appendChild(renderQuestion(current, index));
+    });
+    // questionsArray.forEach((question) => questionsContainer.appendChild(renderQuestion(question)));
 };
 
-const renderQuestion = (question) => {
+const renderQuestion = (question, index) => {
     const questionWrapper = document.createElement("div");
     questionWrapper.classList.add("question-wrapper");
     questionWrapper.id = question._id;
+    questionWrapper.setAttribute("tabIndex", index);
 
     const questionTitle = document.createElement("p");
     questionTitle.classList.add("question-wrapper__question-title");
@@ -142,8 +147,6 @@ const resetQuestionContainer = () => {
     }
 };
 const sortBy = (e) => {
-    console.log(e.target.value);
-
     if (e.target.value === "week") {
         getQuestionsFromServer(e.target.value);
     }
