@@ -133,12 +133,14 @@ const submitQuestion = (e) => {
 			.then((res) => res.json())
 			.then((data) => (allQuestions = data))
 			.then((allQuestions) => {
+				overlayOn("Question submitted successfully ✅");
+
 				displayQuestions(allQuestions.reverse());
 			})
 			.catch((err) => {
 				console.error(err);
 				alert(
-					`Sorry, it looks like there's been a problem! Please try submitting your answer again. The error code is ${err.status}`
+					`Sorry, it looks like there's been a problem! Please try submitting your answer again. `
 				);
 			});
 	}
@@ -193,12 +195,14 @@ const addNewAnswer = (_id, newAnswerObj) => {
 	};
 	const inputValid = validateAnswer(answerTitle, answerOwner);
 	if (inputValid) {
+
 		fetch("/questions", {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({ _id, answer: newAnswerObject })
+
 		})
 			.then((res) => res.json())
 			.then((data) => (allQuestions = data))
@@ -210,7 +214,7 @@ const addNewAnswer = (_id, newAnswerObj) => {
 			.catch((err) => {
 				console.error(err);
 				alert(
-					`This answer hasn't been sent successfully - please try again. The error code is ${err.status}`
+					`This answer hasn't been sent successfully - please try again.`
 				);
 			});
 	}

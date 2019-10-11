@@ -169,3 +169,16 @@ const sortBy = (e) => {
 };
 
 document.getElementById("sortby").addEventListener("change", sortBy);
+
+const overlayOn = (text) => {
+	const overlay = document.querySelector(".overlay");
+	overlay.style.display = "block";
+	const creationSuccess = document.createElement("p");
+	const creationSuccessMessage = document.createTextNode(text);
+	creationSuccess.appendChild(creationSuccessMessage);
+	creationSuccess.classList.add("overlay__text");
+	overlay.appendChild(creationSuccess);
+	setTimeout(() => {
+		overlay.style.display = "none";
+	}, 1200);
+};
