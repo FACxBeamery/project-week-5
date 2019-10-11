@@ -22,6 +22,7 @@ const changeAnswerForm = (submitButton) => {
     answersContainer.removeChild(submitButton);
     const newAnswerForm = document.createElement("form");
     newAnswerForm.classList.add("form");
+    newAnswerForm.classList.add("form--auto-width");
     const newAnswerText = document.createElement("textarea");
     newAnswerText.classList.add("form__textarea");
     newAnswerText.classList.add("form__input");
@@ -73,7 +74,10 @@ const changeAnswerForm = (submitButton) => {
 const displayQuestions = (questionsArray) => {
     resetQuestionContainer();
     const questionsContainer = document.getElementById("questions-container");
-    questionsArray.forEach((question) => questionsContainer.appendChild(renderQuestion(question)));
+    questionsArray.reduce((previous, current, index, array) => {
+        console.log(current);
+        questionsContainer.appendChild(renderQuestion(current, index));
+    }, 0);
 };
 
 const renderQuestion = (question) => {
@@ -94,7 +98,7 @@ const renderQuestion = (question) => {
     questionDetailContainer.appendChild(questionOwner);
 
     const week = document.createElement("p");
-    week.textContent = `Week ${question.week}`;
+    week.textContent = `${question.week === "0" ? "Generic" : `Week ${question.week}`}`;
     // questionDetailContainer.appendChild(week);
     week.classList.add("question-wrapper__week");
 
