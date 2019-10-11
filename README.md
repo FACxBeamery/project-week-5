@@ -14,3 +14,32 @@ Once a question is submitted, it is added to the forum's question board, and oth
 
 We hope to deploy the training forum online in the near future. 
 
+**Installation instructions**
+1. Create a file named `.env` in the root directory. Inside this folder, add the following two lines:
+```
+DATABASE_URL=mongodb://<url>
+DATABASE_URL_TEST=mongodb:<url>
+```
+
+
+2. Then, again in the root directory, run 
+```
+> npm install
+```
+
+3. To start the server, run 
+```
+> npm start
+```
+___
+
+For development purposes, run 
+```
+> npm dev:start 
+```
+to keep the server running between file changes. 
+
+Any changes you make can be tested by running
+```
+> npm test
+```
