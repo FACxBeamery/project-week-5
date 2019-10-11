@@ -140,7 +140,7 @@ const submitQuestion = (e) => {
 			.catch((err) => {
 				console.error(err);
 				alert(
-					`Sorry, it looks like there's been a problem! Please try submitting your answer again. `
+					`Sorry, it looks like there's been a problem! Please check your connection and try again! `
 				);
 			});
 	}
@@ -213,7 +213,7 @@ const addNewAnswer = (_id, newAnswerObj) => {
 			.catch((err) => {
 				console.error(err);
 				alert(
-					`This answer hasn't been sent successfully - please try again.`
+					`This answer hasn't been sent successfully - please check your connection and try again.`
 				);
 			});
 	}
