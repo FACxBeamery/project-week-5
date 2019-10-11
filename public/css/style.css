@@ -23,12 +23,19 @@ input {
     margin-bottom: 0.5rem;
 }
 .form {
-    display: flex;
-    flex-direction: column;
-    margin: 0rem 1rem 2rem 1rem;
-    align-items: center;
-    width: 80vw;
-    margin: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 80vw;
+	margin: auto;
+	border: 0.25rem solid #19e7fe;
+	padding: 1.25rem;
+	box-shadow: 0.25rem 0.25rem 0rem #8ef4ff;
+	margin-bottom: 2rem;
+}
+
+.form--auto-width {
+    width: auto;
 }
 
 .form__label {
@@ -38,10 +45,12 @@ input {
 
 .form__dropdown {
     align-self: center;
+    border: 0.125rem solid #444;
 }
 
 .form__input {
     width: 80vw;
+    border: 0.125rem solid #444;
 }
 
 .form__textarea {
@@ -49,6 +58,8 @@ input {
     margin-top: 0px;
     min-height: 10vh;
     overflow-y: scroll;
+    border: 0.125rem solid #444;
+    max-width: 65vw;
 }
 
 .form__button {
@@ -115,6 +126,9 @@ input {
     color: #8a8a8a;
 }
 
+.answer-wrapper__answer-text {
+    word-break: break-all;
+}
 .question-wrapper__week {
     text-align: right;
     background: #ffe500;

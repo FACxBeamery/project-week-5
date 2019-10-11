@@ -1,3 +1,4 @@
+
 const resetErrors = () => {
     const errorBoxes = document.getElementsByClassName("form__error-box");
     if (errorBoxes) {
@@ -129,43 +130,35 @@ const getQuestionsFromServer = (method) => {
             }
         })
         .catch(console.error);
+
 };
 
 const addNewAnswer = (_id, newAnswerObj) => {
-    console.log("this ran");
-    const answerTitleValue = newAnswerObj.answerTitle;
-    const answerOwnerValue = newAnswerObj.answerOwner;
-    console.log(answerTitleValue);
-    if (
-        !(
-            answerTitleValue &&
-            answerTitleValue.length < 10000 &&
-            answerOwnerValue &&
-            answerOwnerValue.length < 20
-        )
-    ) {
-        console.error("answer is invalid, please ensure that it is less than 10000 characters");
-        alert(
-            "Your answer is too long! Please try to be more concise in your response, and keep it under 10000 characters!"
-        );
-    } else {
-        fetch("/questions", {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ _id, answer: newAnswerObj })
-        })
-            .then((res) => res.json())
-            .then((data) => (allQuestions = data))
-            .then((allQuestions) => {
-                displayQuestions(allQuestions.reverse());
-            })
-            .catch((err) => {
-                console.error(err);
-                alert(
-                    `This answer hasn't been sent successfully - please try again. The error code is ${err.status}`
-                );
-            });
-    }
+	const answerTitleValue = newAnswerObj.answerTitle;
+	const answerOwnerValue = newAnswerObj.answerOwner;
+	if (!(answerTitleValue && answerTitleValue.length < 10000 && answerOwnerValue && answerOwnerValue.length < 20)) {
+		console.error("answer is invalid, please ensure that it is less than 10000 characters");
+		alert(
+			"Your answer is too long! Please try to be more concise in your response, and keep it under 10000 characters!"
+		);
+	} else {
+		fetch("/questions", {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ _id, answer: newAnswerObj }),
+		})
+			.then(res => res.json())
+			.then(data => (allQuestions = data))
+			.then(allQuestions => {
+				displayQuestions(allQuestions.reverse());
+
+				document.getElementById(_id).focus();
+			})
+			.catch(err => {
+				console.error(err);
+				alert(`This answer hasn't been sent successfully - please try again. The error code is ${err.status}`);
+			});
+	}
 };

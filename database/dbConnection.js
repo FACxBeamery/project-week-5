@@ -1,7 +1,18 @@
+require("dotenv").config();
 const mongo = require("mongodb").MongoClient;
 
 let _db;
 let _client;
+
+let dbUrl;
+
+if (process.env.NODE_ENV === "test") {
+    dbUrl = process.env.DATABASE_URL_TEST;
+} else {
+    dbUrl = process.env.DATABASE_URL;
+}
+
+const dbConfig = { useNewUrlParser: true, useUnifiedTopology: true };
 
 const initDb = () => {
     return new Promise((resolve, reject) => {
@@ -20,15 +31,7 @@ const initDb = () => {
             resolve(_db);
         }
 
-        mongo.connect(
-            "mongodb://localhost:27017/trainingforum",
-            {
-                useNewUrlParser: true,
-                useUnifiedTopology: true
-            },
-
-            connected
-        );
+        mongo.connect(dbUrl, dbConfig, connected);
     });
 };
 
