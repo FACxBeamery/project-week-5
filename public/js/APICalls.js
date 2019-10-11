@@ -133,6 +133,7 @@ const submitQuestion = (e) => {
 			.then((res) => res.json())
 			.then((data) => (allQuestions = data))
 			.then((allQuestions) => {
+				overlayOn("Question submitted successfully ✅");
 				displayQuestions(allQuestions.reverse());
 			})
 			.catch((err) => {
