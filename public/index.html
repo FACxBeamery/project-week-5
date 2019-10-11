@@ -14,21 +14,21 @@
     <body>
         <header class="header">
             <h1 class="header__title">FACxBeamery Training Forum</h1>
-            <p class="header__subtitle">Find the answer to your stupid question here!</p>
+            <p class="header__subtitle">Find the answer to your questions here!</p>
         </header>
         <main>
             <section>
                 <form id="question-form" class="form">
-                    <label for="question" class="form__label">Enter your question here:</label>
-                    <input type="text" name="question" class="form__input" required />
+                    <label for="question-text" class="form__label">Enter your question here:</label>
+                    <input type="text" id="question-text"" class="form__input" required />
 
-                    <label for="answer" class="form__label"
+                    <label for="answer-text" class="form__label"
                         >Do you know the answer? Enter it here:</label
                     >
                     <textarea
                         class="form__textarea form__input"
                         type="text"
-                        name="answer"
+                        id="answer-text"
                         class="form__input"
                         rows="6"
                     ></textarea>
@@ -68,9 +68,6 @@
                         <option value="Kristina">Kristina</option>
                     </select>
 
-                    <label class="form__label visually-hidden" for="submit-button"
-                        >Click here to submit:</label
-                    >
                     <button
                         type="submit"
                         class="form__button"

@@ -23,12 +23,15 @@ input {
 	margin-bottom: 0.5rem;
 }
 .form {
-	display: flex;
-	flex-direction: column;
-	margin: 0rem 1rem 2rem 1rem;
-	align-items: center;
-	width: 80vw;
-	margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80vw;
+    margin: auto;
+    border: 0.25rem solid #19e7fe;
+    padding: 1.25rem;
+    box-shadow: 0.25rem 0.25rem 0rem #8ef4ff;
+    margin-bottom: 2rem;
 }
 
 .form__label {
