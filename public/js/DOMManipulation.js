@@ -15,6 +15,17 @@ document.getElementById("questions-container").addEventListener("click", e => {
 	}
 });
 
+const displayQuestions = questionsArray => {
+	resetQuestionContainer();
+	const questionsContainer = document.getElementById("questions-container");
+	if (questionsArray) {
+		questionsArray.reduce((previous, current, index, array) => {
+			console.log(current);
+			questionsContainer.appendChild(renderQuestion(current, index));
+		}, 0);
+	}
+};
+
 const addNewAnswerForm = submitButton => {
 	const answersContainer = submitButton.parentNode;
 	const _id = answersContainer.parentNode.id;
@@ -35,18 +46,19 @@ const addNewAnswerForm = submitButton => {
 	newAnswerOwner.id = `owner${_id}`;
 	let newOption;
 	const namesArray = ["", "João", "Martha", "Lyndsey", "Tom", "Thomas", "Toni", "Michael", "Kristina", "Oliver"];
-	for (let i = 0; i < namesArray.length; i++) {
+	namesArray.forEach(name => {
 		newOption = document.createElement("option");
 		if (i === 0) {
 			newOption.textContent = "Select Name";
 			newOption.disabled = true;
 			newOption.selected = true;
 		} else {
-			newOption.textContent = namesArray[i];
+			newOption.textContent = name;
 		}
-		newOption.value = namesArray[i];
+		newOption.value = name;
 		newAnswerOwner.appendChild(newOption);
-	}
+	});
+
 	const newAnswerOwnerLabel = document.createElement("label");
 	newAnswerOwnerLabel.textContent = "Who are you?";
 	newAnswerOwnerLabel.setAttribute("for", `owner${_id}`);
@@ -64,16 +76,6 @@ const addNewAnswerForm = submitButton => {
 	newAnswerForm.appendChild(newAnswerSubmit);
 	answersContainer.appendChild(newAnswerForm);
 	newAnswerTextLabel.focus();
-};
-
-const displayQuestions = questionsArray => {
-	resetQuestionContainer();
-	const questionsContainer = document.getElementById("questions-container");
-	questionsArray.reduce((previous, current, index, array) => {
-		console.log(current);
-		questionsContainer.appendChild(renderQuestion(current, index));
-	}, 0);
-	// questionsArray.forEach((question) => questionsContainer.appendChild(renderQuestion(question)));
 };
 
 const renderQuestion = (question, index) => {

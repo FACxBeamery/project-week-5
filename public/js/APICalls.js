@@ -1,84 +1,136 @@
-const submitQuestion = e => {
-	e.preventDefault();
-	const inputs = document.getElementById("question-form").elements;
 
-	const questionTitleValue = inputs["question"].value;
-	const weekValue = inputs["week-dropdown"].value;
-	const questionOwnerValue = inputs["name-dropdown"].value;
-	const answerTitleValue = inputs["answer"].value;
-	const answerOwnerValue = inputs["name-dropdown"].value;
-	inputs["question"].value = "";
-	inputs["week-dropdown"].value = "";
-	inputs["name-dropdown"].value = "";
-	inputs["answer"].value = "";
-	inputs["name-dropdown"].value = "";
+const resetErrors = () => {
+    const errorBoxes = document.getElementsByClassName("form__error-box");
+    if (errorBoxes) {
+        while (errorBoxes[0]) {
+            errorBoxes[0].classList.remove("form__error-box");
+        }
+    }
 
-	if (questionTitleValue.length > 140 || typeof questionTitleValue !== "string") {
-		alert(
-			"Question title is not valid - please ensure it is between 1 and 140 characters in length, and is submitted as a string."
-		);
-	} else if (
-		questionOwnerValue.length < 2 ||
-		questionOwnerValue.length > 20 ||
-		typeof questionTitleValue !== "string"
-	) {
-		alert(
-			"This name is not valid - please ensure it is between 2 and 20 characters in length, and is submitted as a string."
-		);
-	} else if (!Number.isInteger(Number(weekValue)) || weekValue < 0 || weekValue > 12) {
-		alert("Please ensure that the week chosen is a whole number between 0 and 12 (inclusive)");
-	} else if (answerTitleValue.length > 10000) {
-		alert("This answer is too long! Please keep your answer to under 10000 characters.");
-	} else if (!(questionTitleValue && weekValue && questionOwnerValue)) {
-		// hard-coding required inputs so request doesn't send
-		console.error("Please fill in the title!");
-	} else {
-		const body = {
-			questionTitle: questionTitleValue,
-			answers: answerTitleValue ? [{ answerTitle: answerTitleValue, answerOwner: answerOwnerValue }] : [],
-			week: weekValue,
-			questionOwner: questionOwnerValue,
-		};
-		fetch("/questions", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(body),
-		})
-			.then(res => res.json())
-			.then(data => (allQuestions = data))
-			.then(allQuestions => {
-				console.log("Displaying questions!");
-				displayQuestions(allQuestions);
-			})
-			.catch(err => {
-				console.error(err);
-				alert(
-					`Sorry, it looks like there's been a problem! Please try submitting your answer again. The error code is ${err.status}`
-				);
-			});
-	}
+    const errorMessages = document.getElementsByClassName("form__error-message");
+
+    if (errorMessages) {
+        while (errorMessages[0]) {
+            errorMessages[0].parentNode.removeChild(errorMessages[0]);
+        }
+    }
 };
 
-const getQuestionsFromServer = method => {
-	fetch(`/questions${method ? "/" + method : ""}`, {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-		},
-	})
-		.then(res => res.json())
-		.then(data => (allQuestions = data))
-		.then(allQuestions => {
-			console.log(allQuestions);
-			if (!method) {
-				displayQuestions(allQuestions.reverse());
-			} else {
-				displayQuestions(allQuestions);
-			}
-		})
-		.catch(console.error);
+const createError = (message, input, form) => {
+    input.classList.add("form__error-box");
+    const errorMessage = document.createElement("p");
+    errorMessage.classList.add("form__error-message");
+    errorMessage.textContent = message;
+    // resetWarnings();
+    form.insertBefore(errorMessage, input.nextSibling);
+};
+
+const validateInput = (inputs, questionTitle, week, questionOwner, answerTitle) => {
+    let inputValid = true;
+
+    resetErrors();
+
+    const form = document.getElementById("question-form");
+    if (!questionTitle) {
+        inputValid = false;
+        createError("Question can't be empty!", inputs["question"], form);
+    } else if (questionTitle.length > 140 || typeof questionTitle !== "string") {
+        inputValid = false;
+        createError("Question can't be longer than 140 chars!", inputs["question"], form);
+    }
+    if (
+        !questionOwner ||
+        questionOwner.length < 2 ||
+        questionOwner.length > 20 ||
+        typeof questionOwner !== "string"
+    ) {
+        inputValid = false;
+        createError("Please tell us who you are!", inputs["name-dropdown"], form);
+    }
+    if (!week || !Number.isInteger(Number(week)) || week < 0 || week > 12) {
+        inputValid = false;
+        createError("Please assign a week to this question!", inputs["week-dropdown"], form);
+    }
+    if (answerTitle.length > 10000) {
+        inputValid = false;
+        createError("Sorry this answer is too long!", inputs["answer-text"], form);
+    }
+
+    return inputValid;
+};
+
+const submitQuestion = (e) => {
+    e.preventDefault();
+    const inputs = document.getElementById("question-form").elements;
+
+    const questionTitleValue = inputs["question-text"].value;
+    const weekValue = inputs["week-dropdown"].value;
+    const questionOwnerValue = inputs["name-dropdown"].value;
+    const answerTitleValue = inputs["answer-text"].value;
+    const answerOwnerValue = inputs["name-dropdown"].value;
+
+    const inputValid = validateInput(
+        inputs,
+        questionTitleValue,
+        weekValue,
+        questionOwnerValue,
+        answerTitleValue
+    );
+
+    if (inputValid) {
+        inputs["question"].value = "";
+        inputs["week-dropdown"].value = "";
+        inputs["name-dropdown"].value = "";
+        inputs["answer"].value = "";
+        inputs["name-dropdown"].value = "";
+
+        const body = {
+            questionTitle: questionTitleValue,
+            answers: answerTitleValue
+                ? [{ answerTitle: answerTitleValue, answerOwner: answerOwnerValue }]
+                : [],
+            week: weekValue,
+            questionOwner: questionOwnerValue
+        };
+        fetch("/questions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        })
+            .then((res) => res.json())
+            .then((data) => (allQuestions = data))
+            .then((allQuestions) => {
+                displayQuestions(allQuestions.reverse());
+            })
+            .catch((err) => {
+                console.error(err);
+                alert(
+                    `Sorry, it looks like there's been a problem! Please try submitting your answer again. The error code is ${err.status}`
+                );
+            });
+    }
+};
+
+const getQuestionsFromServer = (method) => {
+    fetch(`/questions${method ? "/" + method : ""}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then((res) => res.json())
+        .then((data) => (allQuestions = data))
+        .then((allQuestions) => {
+            if (!method) {
+                displayQuestions(allQuestions.reverse());
+            } else {
+                displayQuestions(allQuestions);
+            }
+        })
+        .catch(console.error);
+
 };
 
 const addNewAnswer = (_id, newAnswerObj) => {
