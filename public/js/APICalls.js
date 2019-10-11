@@ -81,10 +81,8 @@ const getQuestionsFromServer = (method) => {
 };
 
 const addNewAnswer = (_id, newAnswerObj) => {
-    console.log("this ran");
     const answerTitleValue = newAnswerObj.answerTitle;
     const answerOwnerValue = newAnswerObj.answerOwner;
-    console.log(answerTitleValue);
     if (
         !(
             answerTitleValue &&
