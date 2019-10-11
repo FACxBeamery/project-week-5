@@ -32,16 +32,15 @@ input {
 }
 
 .form__label {
+    margin-top: 1rem;
     margin-bottom: 0.5rem;
 }
 
 .form__dropdown {
-    margin-bottom: 1rem;
     align-self: center;
 }
 
 .form__input {
-    margin-bottom: 1rem;
     width: 80vw;
 }
 
@@ -54,6 +53,7 @@ input {
 
 .form__button {
     margin: auto;
+    margin-top: 1rem;
     border: 0.125rem solid #1be7ff;
     background-color: #1be7ff;
     margin-bottom: 1.5rem;
@@ -65,6 +65,19 @@ input {
     align-items: flex-start;
 }
 
+.form__error-box {
+    border: 0.25rem solid red;
+}
+
+.form__error-message {
+    color: white;
+    background-color: red;
+    font-weight: bold;
+    width: 80vw;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0.25rem 0;
+}
 .question-wrapper {
     display: flex;
     flex-direction: column;
