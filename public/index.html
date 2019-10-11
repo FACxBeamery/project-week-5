@@ -20,7 +20,8 @@
             <section>
                 <form id="question-form" class="form">
                     <label for="question-text" class="form__label">Enter your question here:</label>
-                    <input type="text" id="question-text"" class="form__input" required />
+                    <input type="text" id="question-text"" name = "question" class="form__input"
+                    required />
 
                     <label for="answer-text" class="form__label"
                         >Do you know the answer? Enter it here:</label
@@ -29,6 +30,7 @@
                         class="form__textarea form__input"
                         type="text"
                         id="answer-text"
+                        name="answer"
                         class="form__input"
                         rows="6"
                     ></textarea>
@@ -55,7 +57,7 @@
 
                     <label for="name-dropdown" class="form__label">Who are you?</label>
 
-                    <select class="form__dropdown" name="name-dropdown" required>
+                    <select class="form__dropdown" id="name-dropdown" name="name-dropdown" required>
                         <option value="" disabled selected>Select Name</option>
                         <option value="Joao">João</option>
                         <option value="Martha">Martha</option>
