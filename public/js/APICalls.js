@@ -195,18 +195,17 @@ const addNewAnswer = (_id, newAnswerObj) => {
 	};
 	const inputValid = validateAnswer(answerTitle, answerOwner);
 	if (inputValid) {
-
 		fetch("/questions", {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({ _id, answer: newAnswerObject })
-
 		})
 			.then((res) => res.json())
 			.then((data) => (allQuestions = data))
 			.then((allQuestions) => {
+				overlayOn("Answer added successfully ✅");
 				displayQuestions(allQuestions.reverse());
 
 				document.getElementById(_id).focus();
