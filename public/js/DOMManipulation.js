@@ -12,16 +12,7 @@ document
 			e.target.classList.contains("answers-container__submit-new-answer")
 		) {
 			const _id = e.target.parentNode.parentNode.parentNode.id;
-			const newAnswerText =
-				e.target.previousSibling.previousSibling.previousSibling.value;
-			// console.log(e.target.previousSibling.previousSibling.previousSibling);
-
-			const newAnswerOwner = e.target.previousSibling.value;
-			const newAnswerObject = {
-				answerTitle: newAnswerText,
-				answerOwner: newAnswerOwner
-			};
-			addNewAnswer(_id, newAnswerObject);
+			addNewAnswer(_id);
 		}
 	});
 
@@ -42,6 +33,7 @@ const addNewAnswerForm = (submitButton) => {
 	answersContainer.removeChild(submitButton);
 	const newAnswerForm = document.createElement("form");
 	newAnswerForm.classList.add("form");
+	newAnswerForm.id = "answer-form";
 	const newAnswerText = document.createElement("textarea");
 	newAnswerText.classList.add("form__textarea");
 	newAnswerText.classList.add("form__input");

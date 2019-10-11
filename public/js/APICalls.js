@@ -134,6 +134,7 @@ const submitQuestion = (e) => {
 			.then((data) => (allQuestions = data))
 			.then((allQuestions) => {
 				overlayOn("Question submitted successfully ✅");
+
 				displayQuestions(allQuestions.reverse());
 			})
 			.catch((err) => {
@@ -164,30 +165,44 @@ const getQuestionsFromServer = (method) => {
 		.catch(console.error);
 };
 
+const validateAnswer = (answerTitle, answerOwner) => {
+	resetErrors();
+	let inputValid = true;
+	const form = document.getElementById("answer-form");
+	if (!answerTitle.value) {
+		inputValid = false;
+		createError("Answer can't be empty!", answerTitle, form);
+	} else if (answerTitle.value.length > 10000) {
+		inputValid = false;
+		createError("Sorry, this answer is too long!", answerTitle, form);
+	}
+
+	if (!answerOwner.value) {
+		inputValid = false;
+		createError("Please tell us who you are!", answerOwner, form);
+	}
+
+	return inputValid;
+};
+
 const addNewAnswer = (_id, newAnswerObj) => {
-	const answerTitleValue = newAnswerObj.answerTitle;
-	const answerOwnerValue = newAnswerObj.answerOwner;
-	if (
-		!(
-			answerTitleValue &&
-			answerTitleValue.length < 10000 &&
-			answerOwnerValue &&
-			answerOwnerValue.length < 20
-		)
-	) {
-		console.error(
-			"answer is invalid, please ensure that it is less than 10000 characters"
-		);
-		alert(
-			"Your answer is too long! Please try to be more concise in your response, and keep it under 10000 characters!"
-		);
-	} else {
+	const answerTitle = document.getElementById(`text${_id}`);
+	const answerOwner = document.getElementById(`owner${_id}`);
+
+	const newAnswerObject = {
+		answerTitle: answerTitle.value,
+		answerOwner: answerOwner.value
+	};
+	const inputValid = validateAnswer(answerTitle, answerOwner);
+	if (inputValid) {
+
 		fetch("/questions", {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: JSON.stringify({ _id, answer: newAnswerObj })
+			body: JSON.stringify({ _id, answer: newAnswerObject })
+
 		})
 			.then((res) => res.json())
 			.then((data) => (allQuestions = data))
