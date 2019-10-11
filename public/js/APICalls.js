@@ -107,6 +107,8 @@ const addNewAnswer = (_id, newAnswerObj) => {
             .then((data) => (allQuestions = data))
             .then((allQuestions) => {
                 displayQuestions(allQuestions.reverse());
+
+                document.getElementById(_id).focus();
             })
             .catch((err) => {
                 console.error(err);
