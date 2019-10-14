@@ -6,16 +6,13 @@ const getQuestions = (req, res) => {
 	const db = getDB();
 
 	if (["week"].includes(req.params.sortby)) {
-		console.log("im here");
-
 		sortQuestions(db.collection("questions"), req.params.sortby, -1)
-			.then(result => res.status(200).json(result))
-			.catch(err => res.status(404).json(err.message));
+			.then((result) => res.status(200).json(result))
+			.catch((err) => res.status(404).json(err.message));
 	} else {
-		console.log("im here 2");
 		readQuestions(db.collection("questions"))
-			.then(result => res.status(200).json(result))
-			.catch(err => res.status(404).json(err.message));
+			.then((result) => res.status(200).json(result))
+			.catch((err) => res.status(404).json(err.message));
 	}
 };
 

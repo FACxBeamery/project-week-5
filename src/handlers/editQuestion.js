@@ -11,13 +11,12 @@ const editQuestion = (req, res) => {
 	// })
 
 	const newAnswer = req.fields.answer;
-	console.log(req.fields.answer);
 	const idToUpdate = req.fields._id;
 	const db = getDB();
 	updateQuestion(newAnswer, idToUpdate, db.collection("questions"))
-		.then(result => readQuestions(db.collection("questions")))
-		.then(result => res.status(200).json(result))
-		.catch(err => res.status(404).json(err.message));
+		.then((result) => readQuestions(db.collection("questions")))
+		.then((result) => res.status(200).json(result))
+		.catch((err) => res.status(404).json(err.message));
 };
 
 module.exports = editQuestion;

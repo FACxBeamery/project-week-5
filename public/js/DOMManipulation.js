@@ -21,7 +21,6 @@ const displayQuestions = (questionsArray) => {
 	const questionsContainer = document.getElementById("questions-container");
 	if (questionsArray) {
 		questionsArray.reduce((previous, current, index, array) => {
-			console.log(current);
 			questionsContainer.appendChild(renderQuestion(current, index));
 		}, 0);
 	}
